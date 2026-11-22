@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f1e7">
+  <meta name="description" content="دليلك التفاعلي لكلية الأعمال — جامعة الإسكندرية: ابحث عن القاعات، استكشف الخريطة، وتعرّف على الأقسام. · Interactive guide to the Faculty of Business, Alexandria University.">
+  <title>مرشدك في كلية الأعمال · Your Guide to the Faculty of Business</title>
+  <link rel="icon" href="../assets/images/faculty-logo.png">
+  <script>
+    /* Boot flags: applied before first paint to avoid flashes (theme, language, loader, route curtain) */
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('guide-theme');
+        if (!t && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+        if (t) d.dataset.theme = t;
+        if (localStorage.getItem('guide-lang') === 'en') { d.lang = 'en'; d.dir = 'ltr'; }
+        var s = sessionStorage;
+        if (s.getItem('guide-nav')) { s.removeItem('guide-nav'); d.classList.add('is-arriving'); s.setItem('guide-splash', '1'); }
+        else if (!s.getItem('guide-splash')) d.classList.add('has-loader');
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/motion.css">
+  <link rel="stylesheet" href="../assets/css/pages/team.css">
+</head>
+<body data-page="team" data-base="../">
+<main id="main" class="page wrap">
+    <header class="page-hero " style="--tone: var(--lilac)">
+      <p class="eyebrow" data-reveal><b>05</b><span data-i18n="nav.team"></span></p>
+      <h1 data-i18n="team.title" data-split></h1>
+      <p class="lead" data-i18n="team.sub" data-reveal></p>
+    </header>
+
+  <p class="team-note" data-reveal><i data-lucide="shuffle"></i><span data-i18n="team.note"></span></p>
+  <section class="badges" id="team" aria-label="Team"></section>
+</main>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="../data/translations.js"></script>
+  <script src="../assets/js/core/runtime.js"></script>
+  <script src="../data/team.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/core/motion.js"></script>
+  <script src="../assets/js/pages/team.js"></script>
+</body>
+</html>

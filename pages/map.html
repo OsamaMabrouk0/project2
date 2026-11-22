@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f1e7">
+  <meta name="description" content="دليلك التفاعلي لكلية الأعمال — جامعة الإسكندرية: ابحث عن القاعات، استكشف الخريطة، وتعرّف على الأقسام. · Interactive guide to the Faculty of Business, Alexandria University.">
+  <title>مرشدك في كلية الأعمال · Your Guide to the Faculty of Business</title>
+  <link rel="icon" href="../assets/images/faculty-logo.png">
+  <script>
+    /* Boot flags: applied before first paint to avoid flashes (theme, language, loader, route curtain) */
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('guide-theme');
+        if (!t && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+        if (t) d.dataset.theme = t;
+        if (localStorage.getItem('guide-lang') === 'en') { d.lang = 'en'; d.dir = 'ltr'; }
+        var s = sessionStorage;
+        if (s.getItem('guide-nav')) { s.removeItem('guide-nav'); d.classList.add('is-arriving'); s.setItem('guide-splash', '1'); }
+        else if (!s.getItem('guide-splash')) d.classList.add('has-loader');
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/motion.css">
+  <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+<body data-page="map" data-base="../">
+<main id="main" class="page wrap">
+    <header class="page-hero is-sea" style="--tone: var(--sea)">
+      <p class="eyebrow" data-reveal><b>03</b><span data-i18n="nav.map"></span></p>
+      <h1 data-i18n="map.title" data-split></h1>
+      <p class="lead" data-i18n="map.sub" data-reveal></p>
+    </header>
+
+  <section class="atlas" id="atlas">
+    <aside class="atlas-index" aria-labelledby="idxT">
+      <h2 id="idxT" data-i18n="map.index"></h2>
+      <ol id="index"></ol>
+    </aside>
+
+    <div class="atlas-stage" id="stage">
+      <div class="viewport" id="viewport" tabindex="0" role="application" data-i18n-label="map.alt">
+        <div class="camera" id="camera">
+          <div class="sk" id="mapSk"></div>
+          <img id="mapImg" src="../assets/images/campus-map.png" data-i18n-alt="map.alt" alt="">
+          <div class="pins" id="pins"></div>
+        </div>
+      </div>
+      <div class="zoom" role="group">
+        <button type="button" id="zIn" data-i18n-label="map.zin"><i data-lucide="plus"></i></button>
+        <button type="button" id="zOut" data-i18n-label="map.zout"><i data-lucide="minus"></i></button>
+        <button type="button" id="zReset" data-i18n-label="map.reset"><i data-lucide="locate-fixed"></i></button>
+      </div>
+      <p class="map-tip"><i data-lucide="hand"></i><span id="tip"></span></p>
+
+      <aside class="detail" id="detail" hidden aria-live="polite"></aside>
+
+      <div class="map-err" id="mapErr" hidden>
+        <div class="state"><span class="state-ico"><i data-lucide="wifi-off"></i></span><h3 data-i18n="map.errT"></h3><p data-i18n="map.err"></p><button class="btn btn-ink" id="mapRetry" type="button" data-i18n="err.retry"></button></div>
+      </div>
+    </div>
+  </section>
+</main>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="../data/translations.js"></script>
+  <script src="../assets/js/core/runtime.js"></script>
+  <script src="../data/buildings.js"></script>
+  <script src="../data/spaces.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/core/motion.js"></script>
+  <script src="../assets/js/pages/map.js"></script>
+</body>
+</html>

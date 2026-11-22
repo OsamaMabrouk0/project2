@@ -1,0 +1,98 @@
+/* Map — interactive atlas with a pannable / zoomable camera */
+
+.atlas { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: clamp(14px, 2vw, 24px); margin-top: clamp(20px, 3vw, 32px); align-items: start; }
+
+/* ---------- Index ---------- */
+.atlas-index { position: sticky; top: calc(var(--hdr) + 16px); display: grid; gap: 12px; max-height: min(720px, calc(100dvh - var(--hdr) - 32px)); padding: 16px; border: var(--bw) solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-2); overflow: hidden; grid-template-rows: auto minmax(0, 1fr); }
+.atlas-index h2 { font-size: var(--fs-2); }
+.atlas-index ol { display: grid; gap: 6px; align-content: start; overflow-y: auto; margin-inline: -6px; padding: 4px 6px 6px; scrollbar-width: thin; }
+.idx { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border: var(--bw) solid transparent; border-radius: var(--r-sm); background: transparent; text-align: start; transition: background .2s, border-color .2s, transform .25s var(--ease-out); }
+.idx:hover { background: var(--paper-2); transform: translateX(calc(var(--dir-x, -1) * 4px)); }
+[dir="ltr"] .idx:hover { --dir-x: 1; }
+.idx.is-on { border-color: var(--line); background: var(--sun); color: #14171c; box-shadow: var(--sh-1); }
+.idx-no { display: grid; place-items: center; width: 34px; height: 34px; border: var(--bw) solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); font: 800 .82rem/1 var(--font-display); }
+.idx.is-on .idx-no { background: var(--ink); color: var(--paper); }
+.idx-t { min-width: 0; line-height: 1.3; }
+.idx-t b { display: block; font-weight: 600; font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.idx-t small { color: var(--ink-2); font-size: .74rem; }
+.idx.is-on .idx-t small { color: #14171c; opacity: .75; }
+.idx > svg { color: var(--ink-3); width: 1.05em; height: 1.05em; }
+
+/* ---------- Stage ---------- */
+.atlas-stage { position: relative; height: clamp(460px, 74vh, 720px); border: var(--bw) solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); box-shadow: var(--sh-3); overflow: hidden; isolation: isolate; }
+.viewport { position: absolute; inset: 0; overflow: hidden; cursor: grab; touch-action: none; outline-offset: -6px; user-select: none; -webkit-user-select: none; }
+.viewport.is-drag { cursor: grabbing; }
+.camera { position: absolute; left: 0; top: 0; width: var(--cw, 100%); height: var(--ch, 100%); transform-origin: 0 0; transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(var(--s, 1)); will-change: transform; --s: 1; }
+.camera.is-anim { transition: transform .85s var(--ease-out); }
+.camera img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .5s; -webkit-user-drag: none; pointer-events: none; }
+.camera img.ready { opacity: 1; }
+.camera .sk { position: absolute; inset: 0; border: 0; border-radius: 0; z-index: 2; }
+.pins { position: absolute; inset: 0; }
+
+/* Pins keep a constant on-screen size: wrapper applies the inverse of the camera scale */
+.pin { position: absolute; width: 0; height: 0; transform: scale(calc(1 / var(--s))); z-index: 3; }
+.pin:hover, .pin.is-on, .pin.is-hot { z-index: 6; }
+.pin-dot {
+  position: absolute; left: -17px; top: -17px; display: grid; place-items: center; width: 34px; height: 34px; padding: 0;
+  border: var(--bw) solid #14171c; border-radius: 50%; background: #fffdf8; color: #14171c; font: 800 .82rem/1 var(--font-display);
+  box-shadow: 2px 2px 0 #14171c; opacity: 0; transform: scale(.4); transition: transform .3s var(--ease-spring), background .2s, color .2s, opacity .3s;
+}
+.ready .pin-dot { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + .3s), 0s, 0s, calc(var(--i) * 60ms + .3s); }
+.pin:hover .pin-dot, .pin.is-hot .pin-dot { transform: scale(1.18); background: var(--sun); transition-delay: 0s; }
+.pin.is-on .pin-dot { transform: scale(1.25); background: var(--coral); transition-delay: 0s; }
+.pin.is-on .pin-dot::after { content: ""; position: absolute; inset: -2px; border: 2px solid var(--coral); border-radius: 50%; animation: ping 1.8s ease-out infinite; }
+.pin.approx .pin-dot { border-style: dashed; }
+.pin-label { position: absolute; left: 0; bottom: 26px; padding: 5px 12px; border: var(--bw) solid #14171c; border-radius: var(--r-pill); background: #14171c; color: #fffdf8; font: 600 .82rem/1.3 var(--font-body); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-50%, 6px); transition: opacity .2s, transform .25s var(--ease-out); }
+.pin:hover .pin-label, .pin.is-on .pin-label, .pin.is-hot .pin-label { opacity: 1; transform: translate(-50%, 0); }
+
+/* Controls */
+.zoom { position: absolute; inset-block-start: 14px; inset-inline-start: 14px; z-index: 8; display: grid; border: var(--bw) solid var(--line); border-radius: var(--r-md); background: var(--surface); box-shadow: var(--sh-1); overflow: hidden; }
+.zoom button { display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: none; transition: background .2s; }
+.zoom button + button { border-block-start: var(--bw) solid var(--line); }
+.zoom button:hover { background: var(--sun); color: #14171c; }
+.zoom button:active { background: var(--coral); }
+.map-tip { position: absolute; inset-block-end: 14px; inset-inline-start: 14px; z-index: 8; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: var(--bw) solid var(--line); border-radius: var(--r-pill); background: var(--surface); font-size: .8rem; font-weight: 500; color: var(--ink-2); pointer-events: none; transition: opacity .3s; }
+.has-detail .map-tip { opacity: 0; }
+
+/* Detail drawer */
+.detail {
+  position: absolute; z-index: 9; inset-block: 14px; inset-inline-end: 14px; width: min(340px, calc(100% - 28px)); display: grid; align-content: start; gap: 12px; padding: 22px 20px 20px;
+  border: var(--bw) solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-2); overflow-y: auto; animation: drawer .55s var(--ease-out);
+}
+@keyframes drawer { from { opacity: 0; transform: translateX(calc(var(--dir-x, -1) * 40px)) scale(.97); } to { opacity: 1; transform: none; } }
+[dir="ltr"] .detail { --dir-x: 1; }
+.detail-x { position: absolute; inset-block-start: 14px; inset-inline-end: 14px; display: grid; place-items: center; width: 38px; height: 38px; border: var(--bw) solid var(--line); border-radius: 50%; background: var(--paper-2); transition: background .2s, transform .3s var(--ease-spring); }
+.detail-x:hover { background: var(--coral); transform: rotate(90deg); }
+.detail .tag { width: fit-content; }
+.detail h3 { font-size: var(--fs-3); line-height: 1.25; padding-inline-end: 44px; }
+.detail p { color: var(--ink-2); font-size: .95rem; }
+.d-note { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border: var(--bw) dashed var(--line); border-radius: var(--r-sm); background: var(--paper); font-size: .86rem; }
+.d-note svg { margin-top: 5px; color: var(--coral); }
+.d-h { font: 800 .86rem/1 var(--font-display); color: var(--ink-2); letter-spacing: .02em; margin-top: 4px; }
+.floors { display: grid; gap: 4px; padding: 10px; border: var(--bw) solid var(--line); border-radius: var(--r-md); background: var(--paper); }
+.fl { display: grid; grid-template-columns: 22px minmax(0, 1fr) 28px; align-items: center; gap: 10px; font-size: .78rem; }
+.fl b { font: 800 .8rem/1 var(--font-display); text-align: center; }
+.fl-bar { height: 20px; border: 1.5px solid var(--line-soft); border-radius: 6px; background: var(--paper-2); overflow: hidden; }
+.fl-bar i { display: block; height: 100%; width: var(--w); background: var(--coral); border-inline-end: 1.5px solid var(--line); transform-origin: right; animation: grow .8s calc(.25s + var(--k) * 70ms) var(--ease-out) backwards; }
+[dir="ltr"] .fl-bar i { transform-origin: left; }
+.fl.is-empty .fl-bar i { background: transparent; border: 0; }
+.fl em { font-style: normal; font-weight: 700; text-align: end; color: var(--ink-2); }
+@keyframes grow { from { transform: scaleX(0); } }
+.detail .btn { justify-self: start; margin-top: 4px; }
+
+.map-err { position: absolute; inset: 0; z-index: 12; display: grid; place-items: center; padding: 16px; background: var(--paper-2); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .atlas { grid-template-columns: minmax(0, 1fr); }
+  .atlas-index { position: static; max-height: none; padding: 12px; grid-template-rows: auto; }
+  .atlas-index h2 { display: none; }
+  .atlas-index ol { display: flex; overflow-x: auto; overflow-y: hidden; gap: 8px; margin: 0; padding: 2px 2px 8px; }
+  .idx { grid-template-columns: 30px auto; width: auto; flex: none; padding: 6px 14px 6px 8px; padding-inline: 8px 14px; border-color: var(--line); background: var(--surface); }
+  .idx-t small, .idx > svg { display: none; }
+  .idx-t b { overflow: visible; }
+  .idx-no { width: 30px; height: 30px; }
+  .atlas-stage { height: clamp(440px, 68dvh, 620px); }
+  .detail { inset-block: auto 12px; inset-inline: 12px; width: auto; max-height: 62%; }
+  .has-detail .zoom { opacity: 0; pointer-events: none; }
+}

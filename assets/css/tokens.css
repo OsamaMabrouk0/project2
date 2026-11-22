@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Design tokens — "Campus Atlas" visual language
+   Warm paper · ink outlines · flat colour blocks · hard offset shadows.
+   Every colour, size and motion curve used by the UI is defined here.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --paper:      #f6f1e7;
+  --paper-2:    #ece5d4;
+  --surface:    #fffdf8;
+  --night:      #11181d;
+
+  /* Ink */
+  --ink:        #14171c;
+  --ink-2:      #4a4f5a;
+  --ink-3:      #7b808b;
+  --on-night:   #f6f1e7;
+
+  /* Lines & shadows */
+  --line:       #14171c;
+  --line-soft:  rgba(20, 23, 28, .14);
+  --shadow-c:   #14171c;
+  --sh-1:       3px 3px 0 var(--shadow-c);
+  --sh-2:       5px 5px 0 var(--shadow-c);
+  --sh-3:       8px 8px 0 var(--shadow-c);
+
+  /* Brand colours (flat blocks — always paired with --on-tone text) */
+  --coral:      #f2552c;
+  --sun:        #ffc23c;
+  --mint:       #7fd1a5;
+  --lilac:      #b9a7f5;
+  --sky:        #8cc8e8;
+  --sea:        #0e5f66;
+  --on-tone:    #14171c;
+  --on-sea:     #fdf8ec;
+
+  /* Shape */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-pill: 999px;
+  --bw: 2px;                       /* outline weight */
+
+  /* Layout */
+  --wrap: 1200px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --hdr: 76px;
+  --dock: 72px;
+
+  /* Typography */
+  --font-display: "Cairo", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-body:    "Readex Pro", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --fs-0: clamp(.86rem, .84rem + .1vw, .94rem);
+  --fs-1: clamp(1rem, .97rem + .15vw, 1.08rem);
+  --fs-2: clamp(1.15rem, 1.08rem + .35vw, 1.35rem);
+  --fs-3: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --fs-4: clamp(2rem, 1.4rem + 2.8vw, 3.6rem);
+  --fs-5: clamp(2.5rem, 1.2rem + 6vw, 5.6rem);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-io:     cubic-bezier(.65, 0, .35, 1);
+  --t-fast: .18s;
+  --t-med:  .45s;
+  --t-slow: .9s;
+}
+
+/* Dark appearance — same layout, inverted surfaces */
+:root[data-theme="dark"] {
+  --paper:      #0f1316;
+  --paper-2:    #171c21;
+  --surface:    #1b2127;
+  --ink:        #f4efe4;
+  --ink-2:      #b9bdc6;
+  --ink-3:      #8a909b;
+  --line:       #3a434d;
+  --line-soft:  rgba(244, 239, 228, .12);
+  --shadow-c:   #000;
+  --night:      #070a0c;
+  color-scheme: dark;
+}
+:root:not([data-theme="dark"]) { color-scheme: light; }

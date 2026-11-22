@@ -1,0 +1,26 @@
+/* Team — ID badges on lanyards */
+
+.team-note { display: flex; gap: 12px; align-items: flex-start; margin-block: clamp(24px, 4vw, 40px) clamp(40px, 6vw, 64px); padding: 14px 18px; border: var(--bw) dashed var(--line); border-radius: var(--r-md); background: var(--surface); font-size: .92rem; color: var(--ink-2); max-width: 760px; }
+.team-note svg { margin-top: 5px; color: var(--coral); }
+
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: clamp(36px, 5vw, 56px) clamp(16px, 2.4vw, 28px); padding-top: 40px; }
+
+.idcard { --tone: var(--coral); position: relative; transform-origin: 50% -44px; }
+html.js .idcard[data-reveal] { transform: translateY(-80px) rotate(var(--rot-from, -8deg)); opacity: 0; transition: transform 1s calc(var(--i, 0) * 80ms) var(--ease-spring), opacity .4s calc(var(--i, 0) * 80ms); }
+html.js .idcard[data-reveal].is-in { transform: none; opacity: 1; }
+.idcard:hover { animation: swing 1.6s ease-in-out; }
+@keyframes swing { 0% { rotate: 0deg; } 18% { rotate: 5deg; } 38% { rotate: -4deg; } 58% { rotate: 2.4deg; } 78% { rotate: -1.2deg; } 100% { rotate: 0deg; } }
+
+.strap { position: absolute; inset-inline: 0; margin-inline: auto; inset-block-start: -46px; width: 26px; height: 52px; background: var(--ink); border-inline: 2px solid var(--line); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%); z-index: 0; }
+.strap::after { content: ""; position: absolute; inset-inline: 0; inset-block-start: 0; height: 6px; background: var(--coral); }
+.idcard-body { position: relative; z-index: 1; display: grid; justify-items: center; gap: 6px; padding: 34px 20px 20px; border: var(--bw) solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-2); overflow: hidden; transition: box-shadow .3s; }
+.idcard:hover .idcard-body { box-shadow: 8px 8px 0 var(--shadow-c); }
+.idcard-body::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 92px; background: var(--tone); border-block-end: var(--bw) solid var(--line); }
+.slot { position: absolute; inset-block-start: 12px; inset-inline: 0; margin-inline: auto; width: 52px; height: 12px; border: var(--bw) solid var(--line); border-radius: var(--r-pill); background: var(--paper); z-index: 2; }
+.id-head { position: relative; display: flex; justify-content: space-between; width: 100%; margin-top: -2px; font: 800 .7rem/1 var(--font-display); letter-spacing: .1em; color: #14171c; }
+.avatar { position: relative; display: grid; place-items: center; width: 96px; height: 96px; margin-top: 12px; margin-bottom: 8px; border: var(--bw) solid var(--line); border-radius: 50%; background: #fffdf8; color: #14171c; font: 900 2.6rem/1 var(--font-display); box-shadow: 4px 4px 0 var(--shadow-c); transition: transform .5s var(--ease-spring); }
+.idcard:hover .avatar { transform: rotate(-8deg) scale(1.06); }
+.idcard h3 { font-size: 1.1rem; line-height: 1.4; text-align: center; text-wrap: balance; }
+.role { color: var(--ink-2); font-size: .84rem; font-weight: 500; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; }
+.barcode { width: 100%; height: 26px; margin-top: 12px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 8px, var(--ink) 8px 11px, transparent 11px 13px); opacity: .85; border-radius: 3px; mask-image: linear-gradient(90deg, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); }
