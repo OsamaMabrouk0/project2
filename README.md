@@ -40,7 +40,7 @@ An interactive bilingual guide to halls, buildings and academic departments.
 **على Windows (الطريقة الأسهل):**
 
 1. فك ضغط المشروع.
-2. افتح مجلد `project-redesign-work`.
+2. افتح مجلد المشروع.
 3. اضغط على شريط عنوان المجلد، واكتب `cmd` ثم Enter.
 4. نفّذ الأمر التالي:
 
