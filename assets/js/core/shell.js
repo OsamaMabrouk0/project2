@@ -29,7 +29,7 @@
         </a>
         <nav class="nav" id="nav" data-i18n-label="nav.aria">
           <span class="nav-ind" aria-hidden="true"></span>
-          ${PAGES.map((p, i) => `<a class="nav-link${active(p)}" href="${href(p)}"><b>${String(i + 1).padStart(2, '0')}</b><span data-i18n="nav.${p[0]}"></span></a>`).join('')}
+          ${PAGES.map((p) => `<a class="nav-link${active(p)}" href="${href(p)}"><i data-lucide="${p[1]}"></i><span data-i18n="nav.${p[0]}"></span></a>`).join('')}
         </nav>
         <div class="tools">
           <button class="tool-btn theme-btn" id="themeBtn" type="button" data-i18n-label="theme.aria"><i data-lucide="sun" class="i-sun"></i><i data-lucide="moon" class="i-moon"></i></button>

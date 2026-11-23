@@ -29,7 +29,7 @@ button.chip:hover, a.chip:hover { transform: translateY(-2px); background: var(-
 .chip[aria-pressed="true"], .chip.is-on { background: var(--ink); color: var(--paper); }
 .chip em { font: 700 .72rem/1 var(--font-display); font-style: normal; padding: 3px 7px; border-radius: var(--r-pill); background: var(--paper-2); color: var(--ink); }
 .chip[aria-pressed="true"] em { background: var(--coral); color: #14171c; }
-.chip.is-static { min-height: 32px; padding: 2px 12px; font-size: .85rem; font-weight: 500; background: var(--paper); border-color: var(--line-soft); }
+.chip.is-static { white-space: normal; max-width: 100%; line-height: 1.5; border-radius: 18px; min-height: 32px; padding: 2px 12px; font-size: .85rem; font-weight: 500; background: var(--paper); border-color: var(--line-soft); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* ---------- Tag / badge ---------- */
@@ -48,6 +48,7 @@ button.chip:hover, a.chip:hover { transform: translateY(-2px); background: var(-
 .search input::-webkit-search-cancel-button { display: none; }
 .kbd { display: grid; place-items: center; min-width: 30px; height: 30px; padding-inline: 8px; border: var(--bw) solid var(--line-soft); border-bottom-width: 3px; border-radius: 8px; font: 700 .85rem/1 var(--font-display); color: var(--ink-2); }
 .search:focus-within .kbd { display: none; }
+@media (hover: none), (pointer: coarse), (max-width: 640px) { .kbd { display: none; } }      /* اختصار لوحة المفاتيح لا معنى له على اللمس */
 .icon-btn { display: grid; place-items: center; width: 38px; height: 38px; border: var(--bw) solid var(--line); border-radius: 50%; background: var(--paper-2); transition: background .2s, transform .2s var(--ease-spring); }
 .icon-btn:hover { background: var(--coral); transform: rotate(90deg); }
 
@@ -57,6 +58,16 @@ button.chip:hover, a.chip:hover { transform: translateY(-2px); background: var(-
 .seg-thumb { position: absolute; inset-block: 4px; left: 0; width: var(--w, 0); border-radius: var(--r-pill); background: var(--ink); transform: translateX(var(--x, 0)); transition: transform .5s var(--ease-out), width .5s var(--ease-out); }
 .seg button { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-radius: var(--r-pill); background: none; font-weight: 600; font-size: .92rem; white-space: nowrap; transition: color .3s; }
 .seg button[aria-selected="true"], .seg button[aria-pressed="true"] { color: var(--paper); }
+
+/* صف أفقي قابل للتمرير مع تلاشي حوافه ليعرف المستخدم أن هناك المزيد */
+.fade-row {
+  --f: 18px;
+  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 18px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--f), #000 calc(100% - var(--f)), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 var(--f), #000 calc(100% - var(--f)), transparent 100%);
+}
+.fade-row::-webkit-scrollbar { display: none; }
+.fade-row > * { scroll-snap-align: start; }
 
 /* ---------- Empty / error state ---------- */
 .state { grid-column: 1 / -1; display: grid; justify-items: center; gap: 12px; padding: clamp(32px, 6vw, 64px) 24px; text-align: center; border: var(--bw) dashed var(--line); border-radius: var(--r-lg); background: var(--surface); }

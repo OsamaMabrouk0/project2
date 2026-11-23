@@ -30,7 +30,7 @@
       if (el.hasAttribute('data-count')) countUp(el);
       io.unobserve(el);
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -8% 0px' }   /* threshold 0: العناصر الأطول من الشاشة (بطاقات الأقسام) تظهر أيضًا */);
 
   G.reveal = (root = document) => {
     const items = root.querySelectorAll('[data-reveal], [data-split], [data-count]');

@@ -23,21 +23,18 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
   <link rel="stylesheet" href="../assets/css/tokens.css">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/layout.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/motion.css">
   <link rel="stylesheet" href="../assets/css/pages/map.css">
-  <link rel="stylesheet" href="../assets/css/responsive-fixes.css">
 </head>
 <body data-page="map" data-base="../">
 <main id="main" class="page wrap">
     <header class="page-hero is-sea" style="--tone: var(--sea)">
-      <p class="eyebrow" data-reveal><b>03</b><span data-i18n="nav.map"></span></p>
+      <p class="eyebrow" data-reveal><b><i data-lucide="map"></i></b><span data-i18n="nav.map"></span></p>
       <h1 data-i18n="map.title" data-split></h1>
       <p class="lead" data-i18n="map.sub" data-reveal></p>
     </header>
@@ -62,6 +59,7 @@
         <button type="button" id="zReset" data-i18n-label="map.reset"><i data-lucide="locate-fixed"></i></button>
       </div>
       <p class="map-tip"><i data-lucide="hand"></i><span id="tip"></span></p>
+      <p class="map-hint" id="hint" role="status" aria-live="polite"></p>
 
       <aside class="detail" id="detail" hidden aria-live="polite"></aside>
 
@@ -71,7 +69,7 @@
     </div>
   </section>
 </main>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../data/translations.js"></script>
   <script src="../assets/js/core/runtime.js"></script>
   <script src="../data/buildings.js"></script>

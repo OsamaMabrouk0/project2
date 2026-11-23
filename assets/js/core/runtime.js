@@ -15,16 +15,6 @@
   G.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const listeners = [];
 
-  /* Keep the theme state in one place and make the toggle deterministic. */
-  let initialTheme = 'light';
-  try {
-    const storedTheme = localStorage.getItem('guide-theme');
-    initialTheme = storedTheme === 'dark' || storedTheme === 'light'
-      ? storedTheme
-      : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  } catch { /* use light when storage is unavailable */ }
-  root.dataset.theme = initialTheme;
-
   /* ---------- Text helpers ---------- */
   /** Translate a UI key; {name} placeholders are replaced from `vars`. */
   G.t = (key, vars = {}) => {
@@ -83,10 +73,9 @@
   /* ---------- Theme ---------- */
   G.theme = () => root.dataset.theme || 'light';
   G.setTheme = (mode) => {
-    const next = mode === 'dark' ? 'dark' : 'light';
-    root.dataset.theme = next;
-    try { localStorage.setItem('guide-theme', next); } catch { /* ignore */ }
+    root.dataset.theme = mode;
+    try { localStorage.setItem('guide-theme', mode); } catch { /* ignore */ }
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = next === 'dark' ? '#0f1316' : '#f6f1e7';
+    if (meta) meta.content = mode === 'dark' ? '#0f1316' : '#f6f1e7';
   };
 })();

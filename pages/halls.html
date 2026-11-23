@@ -23,21 +23,18 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
   <link rel="stylesheet" href="../assets/css/tokens.css">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/layout.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/motion.css">
   <link rel="stylesheet" href="../assets/css/pages/halls.css">
-  <link rel="stylesheet" href="../assets/css/responsive-fixes.css">
 </head>
 <body data-page="halls" data-base="../">
 <main id="main" class="page wrap">
     <header class="page-hero " style="--tone: var(--coral)">
-      <p class="eyebrow" data-reveal><b>02</b><span data-i18n="nav.halls"></span></p>
+      <p class="eyebrow" data-reveal><b><i data-lucide="door-open"></i></b><span data-i18n="nav.halls"></span></p>
       <h1 data-i18n="halls.title" data-split></h1>
       <p class="lead" data-i18n="halls.sub" data-reveal></p>
       <form class="search" role="search" onsubmit="return false" data-reveal>
@@ -49,14 +46,14 @@
     </header>
 
   <section class="board" aria-label="Filters">
-    <div class="filter-row"><span class="filter-l" data-i18n="halls.type"></span><div class="seg" id="typeSeg" role="group"></div></div>
-    <div class="filter-row"><span class="filter-l" data-i18n="halls.building"></span><div class="chips scroll-row" id="bChips"></div></div>
+    <div class="filter-row"><span class="filter-l" data-i18n="halls.type"></span><div class="seg seg-fill" id="typeSeg" role="group"></div></div>
+    <div class="filter-row"><span class="filter-l" data-i18n="halls.building"></span><div class="chips scroll-row fade-row" id="bChips"></div></div>
   </section>
 
   <p class="status" id="status" role="status" aria-live="polite"></p>
   <div id="results"></div>
 </main>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../data/translations.js"></script>
   <script src="../assets/js/core/runtime.js"></script>
   <script src="../data/buildings.js"></script>

@@ -104,7 +104,8 @@ D('map.zin', "تكبير", "Zoom in");
 D('map.zout', "تصغير", "Zoom out");
 D('map.reset', "إعادة الضبط", "Reset view");
 D('map.tip', "اسحب للتحريك · Ctrl + عجلة الماوس للتكبير", "Drag to pan · Ctrl + scroll to zoom");
-D('map.tipTouch', "اسحب للتحريك · قرّب بإصبعين للتكبير", "Drag to pan · pinch to zoom");
+D('map.tipTouch', "إصبعان للتحريك والتكبير · اضغط على الدبوس للتفاصيل", "Two fingers to pan & zoom · tap a pin for details");
+D('map.twoFinger', "استخدم إصبعين لتحريك الخريطة", "Use two fingers to move the map");
 D('map.byFloor', "توزيع القاعات على الأدوار", "Halls by floor");
 D('map.noSpaces', "لا توجد قاعات مسجّلة في هذا المكان.", "No halls are listed for this place.");
 D('map.n', "{n} قاعة", "{n} halls");
@@ -126,7 +127,7 @@ D('about.f2', "سنوات دراسية", "years of study");
 D('about.f3', "مسمى وظيفي يعمل به الخريجون", "career roles your degree can lead to");
 D('about.f4', "شعب: عربي · إنجليزي · فرنسي", "programs: Arabic · English · French");
 D('about.note', "المعلومات الواردة هنا للتعريف العام، وقد تتغير الخطط الدراسية؛ راجع الكلية للحصول على أحدث لائحة.", "This information is a general overview and study plans may change; check with the faculty for the latest bylaws.");
-D('about.sub', "خمسة أقسام علمية تؤهّل الطلاب لسوق العمل في المحاسبة والإدارة والمالية والبيانات والتكنولوجيا. تعرّف على كل قسم: ماذا ستدرس فيه، وما مميزاته، وأين يعمل خريجوه.", "Five academic departments prepare students for careers in accounting, management, finance, data and technology. Explore what you will study in each, its advantages, and where graduates work.");
+D('about.sub', "خمسة أقسام علمية تؤهّل الطلاب لسوق العمل في نظم المعلومات والبيانات والتكنولوجيا والإدارة والمحاسبة والمالية. تعرّف على كل قسم: ماذا ستدرس فيه، وما مميزاته، وأين يعمل خريجوه.", "Five academic departments prepare students for careers in information systems, data, technology, management, accounting and finance. Explore what you will study in each, its advantages, and where graduates work.");
 D('about.index', "فهرس الأقسام", "Departments");
 D('about.dept', "القسم {n}", "Department {n}");
 

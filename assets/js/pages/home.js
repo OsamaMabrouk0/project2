@@ -17,7 +17,7 @@
   /* Pins on the postcard (positions are % of the 1280x720 image) */
   const visible = G.buildings.filter((b) => !b.hidden);
   $('#heroPins').innerHTML = visible.map((b, i) =>
-    `<span class="pc-pin" style="left:${(b.x / W) * 100}%;top:${(b.y / H) * 100}%;--i:${i}">${i + 1}</span>`).join('');
+    `<span class="pc-pin" style="left:${(b.x / W) * 100}%;top:${(b.y / H) * 100}%;--i:${i}"></span>`).join('');
 
   /* Sample search chips, picked from real data so they always return results */
   const sample = ['lecture', 'room', 'lab'].map((t) => G.spaces.find((s) => s.t === t)).filter(Boolean);
@@ -42,13 +42,13 @@
     ].map(([n, l, sub, t]) => `<li class="tone-${t}" data-reveal><strong data-count="${n}">0</strong><span>${l}</span>${sub ? `<small>${sub}</small>` : ''}</li>`).join('');
 
     $('#tiles').innerHTML = [
-      ['halls', 'coral', `<div class="art-tickets">${sample.map((s, i) => `<span><b><i data-lucide="${G.types.find((t) => t.id === s.t).ico}"></i></b>${G.esc(G.L(s))}</span>`).join('')}</div>`],
-      ['map', 'sea', '<div class="art-map"><i></i><i></i><i></i></div>'],
-      ['about', 'sun', '<div class="art-discs"><i></i><i></i><i></i><i></i><i></i></div>'],
-      ['team', 'lilac', `<div class="art-faces">${G.team.slice(0, 5).map((m) => `<i>${G.esc(G.L(m.name).slice(0, 1))}</i>`).join('')}</div>`],
-    ].map(([k, t, art], i) => `
+      ['halls', 'coral', 'door-open', `<div class="art-tickets">${sample.map((s, i) => `<span><b><i data-lucide="${G.types.find((t) => t.id === s.t).ico}"></i></b>${G.esc(G.L(s))}</span>`).join('')}</div>`],
+      ['map', 'sea', 'map', '<div class="art-map"><i></i><i></i><i></i></div>'],
+      ['about', 'sun', 'graduation-cap', '<div class="art-discs"><i></i><i></i><i></i><i></i><i></i></div>'],
+      ['team', 'lilac', 'users', `<div class="art-faces">${G.team.slice(0, 5).map((m) => `<i>${G.esc(G.L(m.name).slice(0, 1))}</i>`).join('')}</div>`],
+    ].map(([k, t, ico, art]) => `
       <a class="bento-card tone-${t}" href="${G.base}pages/${k}.html" data-reveal>
-        <div class="bento-top"><span class="bento-no">0${i + 1}</span><span class="bento-go">${arrows}</span></div>
+        <div class="bento-top"><span class="bento-ico"><i data-lucide="${ico}"></i></span><span class="bento-go">${arrows}</span></div>
         <div class="bento-art">${art}</div>
         <div><h3>${G.t('nav.' + k)}</h3><p>${G.t('tile.' + k)}</p></div>
       </a>`).join('');

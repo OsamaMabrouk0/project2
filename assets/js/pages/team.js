@@ -15,11 +15,11 @@
     try {
       $('#team').innerHTML = order.map(({ m, i }, pos) => {
         const name = G.L(m.name);
-        return `<article class="idcard tone-${TONES[i % TONES.length]}" data-reveal style="--i:${pos};--rot-from:${pos % 2 ? 8 : -8}deg">
+        return `<article class="idcard tone-${TONES[i % TONES.length]}" data-reveal style="--i:${pos};--rot-from:${pos % 2 ? 3 : -3}deg">
           <span class="strap" aria-hidden="true"></span>
           <div class="idcard-body">
             <span class="slot" aria-hidden="true"></span>
-            <div class="id-head"><span>${G.t('team.badge').toUpperCase()}</span><span aria-hidden="true">✦</span></div>
+            <div class="id-head"><span>${G.t('team.badge')}</span></div>
             <span class="avatar" aria-hidden="true">${G.esc(name.slice(0, 1))}</span>
             <h3>${G.esc(name)}</h3>
             <p class="role">${m.role ? G.esc(G.L(m.role)) : G.t('team.role')}</p>

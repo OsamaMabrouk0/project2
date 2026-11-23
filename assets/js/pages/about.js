@@ -6,7 +6,9 @@
 
   const ticks = (a) => `<ul class="ticks">${a.map((x) => `<li><i data-lucide="check"></i><span>${e(L(x))}</span></li>`).join('')}</ul>`;
   const chips = (a) => `<ul class="chips">${a.map((x) => `<li class="chip is-static">${e(L(x))}</li>`).join('')}</ul>`;
-  const roles = (g) => `<div class="cgroup">${g.title ? `<h5>${e(L(g.title))}</h5>` : ''}<ul class="roles">${g.items.map((r) => `<li><strong>${e(L(r.n))}</strong><span>${e(L(r.d))}</span></li>`).join('')}</ul></div>`;
+  /* showEn: يُظهر الاسم الإنجليزي بسطر صغير تحت الاسم العربي (للمسميات التي يتداولها سوق العمل بالإنجليزية) */
+  const en = (x, on, tag = 'small') => (on && G.lang === 'ar' && x.en ? `<${tag} class=\"en\" dir=\"ltr\">${e(x.en)}</${tag}>` : '');
+  const roles = (g, showEn) => `<div class=\"cgroup\">${g.title ? `<h5><span>${e(L(g.title))}${en(g.title, showEn, 'bdi')}</span></h5>` : ''}<ul class=\"roles\">${g.items.map((r) => `<li><strong>${e(L(r.n))}</strong>${en(r.n, showEn)}<span>${e(L(r.d))}</span></li>`).join('')}</ul></div>`;
   const courses = (a) => `<ul class="courses">${a.map((c) => `<li>${e(L(c))}</li>`).join('')}</ul>`;
   const sub = (ico, key) => `<h4 class="sub"><span class="sub-ico"><i data-lucide="${ico}"></i></span>${G.t(key)}</h4>`;
 
@@ -20,9 +22,8 @@
     ${p.map((l, i) => `<div class="level" data-lv="${i}" ${i ? 'hidden' : ''}>${l.terms.map(term).join('')}</div>`).join('')}</div>`;
 
   const dept = (d, i) => {
-    const no = String(i + 1).padStart(2, '0');
     return `<article class="dept" id="dept-${d.id}" style="--accent:${d.accent}" data-reveal>
-      <header class="dept-head" data-no="${no}">
+      <header class="dept-head">
         <span class="dept-ico"><i data-lucide="${d.icon}"></i></span>
         <div><h3>${e(L(d.name))}</h3><p class="dept-tag">${e(L(d.tag))}</p></div>
       </header>
@@ -32,7 +33,7 @@
           <section class="panel">${sub('book-open', 'about.areas')}${chips(d.areas)}</section>
           <section class="panel">${sub('sparkles', 'about.adv')}${ticks(d.benefits)}</section>
         </div>
-        <section class="careers">${sub('briefcase', 'about.jobs')}${d.careers.map(roles).join('')}</section>
+        <section class="careers">${sub('briefcase', 'about.jobs')}${d.careers.map((g) => roles(g, d.showEn)).join('')}</section>
         ${d.plan ? plan(d.plan) : ''}
       </div></article>`;
   };
@@ -43,7 +44,7 @@
       .map(([n, k]) => `<li data-reveal><strong data-count="${n}">0</strong><span>${G.t(k)}</span></li>`).join('');
   };
   const toc = () => `<span class="toc-t">${G.t('about.index')}</span>` +
-    G.departments.map((d, i) => `<a href="#dept-${d.id}" style="--accent:${d.accent}"><b>${String(i + 1).padStart(2, '0')}</b><span>${e(L(d.short))}</span></a>`).join('');
+    G.departments.map((d) => `<a href="#dept-${d.id}" style="--accent:${d.accent}"><b><i data-lucide="${d.icon}"></i></b><span>${e(L(d.short))}</span></a>`).join('');
 
   /* Sliding thumb for the level tabs */
   function thumbs() {
@@ -74,14 +75,7 @@
       if (x.isIntersecting) links.forEach((a) => {
         const on = a.getAttribute('href') === '#' + x.target.id;
         a.classList.toggle('is-on', on);
-        if (on && matchMedia('(max-width: 960px)').matches) {
-          /* Move only the horizontal chapter strip; scrollIntoView also moved
-             the document vertically and caused the header/TOC jump. */
-          const strip = a.closest('.toc');
-          const sr = strip.getBoundingClientRect(), ar = a.getBoundingClientRect();
-          const delta = ar.left < sr.left ? ar.left - sr.left - 12 : ar.right > sr.right ? ar.right - sr.right + 12 : 0;
-          if (delta) strip.scrollBy({ left: delta, behavior: G.reduced ? 'auto' : 'smooth' });
-        }
+        if (on && matchMedia('(max-width: 960px)').matches) a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
       });
     }), { rootMargin: '-30% 0px -60% 0px' });
     document.querySelectorAll('.dept').forEach((d) => io.observe(d));

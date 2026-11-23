@@ -1,106 +1,113 @@
 <div align="center">
 
-# 🧭 مرشدك في كلية الأعمال
-### Your Guide to the Faculty of Business — Alexandria University
+<img src="assets/images/faculty-logo.png" alt="شعار الكلية" height="90">
 
-دليل تفاعلي ثنائي اللغة (عربي / English) للقاعات والمباني والأقسام الدراسية.
-An interactive bilingual guide to halls, buildings and academic departments.
+# مرشدك في كلية الأعمال
+**Your Guide to the Faculty of Business — Alexandria University**
 
-`HTML` · `CSS` · `Vanilla JS` · `No build step` · `RTL-first` · `Light / Dark`
+دليل تفاعلي بالعربية والإنجليزية يساعد الطالب على الوصول إلى أي قاعة أو معمل أو مبنى في الكلية في ثوانٍ.
 
 </div>
 
 ---
 
-## ✨ المميزات · Features
+## ✨ ماذا يقدّم المشروع؟
 
-| | |
+| الصفحة | ما تفعله |
 |---|---|
-| 🔎 **بحث ذكي** | يتحمل الأخطاء الإملائية، ويفهم الأرقام العربية، ويصحّح لوحة المفاتيح الخاطئة (مثل `ملا` ← `lab`). |
-| 🎟️ **تذاكر القاعات** | كل قاعة بطاقة تذكرة بالمبنى والدور، مع تجميع حسب المبنى وفلاتر النوع والمبنى. |
-| 🗺️ **خريطة بكاميرا** | سحب وتكبير (ماوس / لمس بإصبعين / كيبورد)، ورحلة سلسة للمبنى مع مخطط توزيع القاعات على الأدوار. |
-| 🎓 **الأقسام كفصول** | فهرس جانبي حي، مجالات العمل، والخطط الدراسية بتبويبات المستويات. |
-| 🪪 **بطاقات الفريق** | بطاقات هوية معلّقة بحركة تأرجح، بترتيب عشوائي في كل زيارة. |
-| 🌗 **فاتح / داكن** | يتبع إعدادات الجهاز ويُحفظ اختيارك. |
-| 🌍 **ثنائي اللغة** | تبديل فوري بين RTL و LTR بدون إعادة تحميل. |
-| ♿ **سهولة الوصول** | تنقل بالكيبورد، `/` للبحث، احترام `prefers-reduced-motion`، رابط تخطٍّ للمحتوى. |
+| 🏠 **الرئيسية** | بحث سريع عن أي قاعة، ونظرة على الكلية بالأرقام. |
+| 🚪 **القاعات** | بحث ذكي يتحمّل الأخطاء الإملائية ولوحة المفاتيح الخاطئة، مع فلاتر النوع والمبنى، وكل قاعة في بطاقة تذكرة. |
+| 🗺️ **الخريطة** | خريطة جوية للحرم بدبابيس لكل مبنى؛ اضغط على دبوس لترى تفاصيل المبنى وتوزيع قاعاته على الأدوار. |
+| 🎓 **نبذة** | الأقسام الخمسة: ماذا تدرس، ومميزات القسم، ومجالات العمل، والخطة الدراسية. |
+| 👥 **الفريق** | بطاقات أعضاء فريق المشروع بترتيب عشوائي في كل زيارة. |
 
-## 🎨 الهوية البصرية · Design language — "Campus Atlas"
+كما يدعم **الوضع الفاتح والداكن**، و**العربية والإنجليزية** (RTL / LTR) بتبديل فوري، ويعمل بسلاسة على **الهاتف واللوحي والحاسوب**.
 
-ورق دافئ + حبر + ألوان مسطحة + ظلال صلبة (بدون زجاج أو blur).
+---
 
-- **الألوان:** `paper #f6f1e7` · `ink #14171c` · `coral #f2552c` · `sun #ffc23c` · `mint #7fd1a5` · `lilac #b9a7f5` · `sky #8cc8e8` · `sea #0e5f66`
-- **الخطوط:** Cairo (عناوين) + Readex Pro (نصوص)
-- **الحركة:** شاشة تحميل بعدّاد حقيقي، ستارة انتقال بين الصفحات، ظهور كلمات العناوين، عدّادات أرقام، شريط متحرك، أزرار مغناطيسية.
+## 🚀 طريقة التشغيل (اختر الأسهل لك)
 
-## 🚀 التشغيل · Getting started
+لا يحتاج المشروع إلى تثبيت أي شيء، ولا إلى إنترنت (الخطوط والأيقونات داخل المجلد).
 
-لا يوجد build. أي سيرفر ملفات ثابتة يكفي:
+**① الأسهل:** افتح المجلد، ثم اضغط **نقرًا مزدوجًا على `index.html`**. وانتهى.
 
-**على Windows (الطريقة الأسهل):**
+**② من VS Code:** ثبّت إضافة **Live Server**، ثم انقر بزر الفأرة الأيمن على `index.html` ← **Open with Live Server**.
 
-1. فك ضغط المشروع.
-2. افتح مجلد المشروع.
-3. اضغط على شريط عنوان المجلد، واكتب `cmd` ثم Enter.
-4. نفّذ الأمر التالي:
+**③ من الطرفية** (داخل مجلد المشروع):
 
-```cmd
-py -m http.server 8080
+```bash
+python -m http.server 8080
 ```
 
-5. افتح المتصفح واكتب `http://localhost:8080`.
-6. لإيقاف الخادم ارجع إلى نافذة CMD واضغط `Ctrl + C`.
+ثم افتح المتصفح على `http://localhost:8080`.
 
-إذا لم يعمل الأمر `py` وكان Python مثبتًا، جرّب `python -m http.server 8080`.
-لا يحتاج المشروع إلى npm أو تثبيت حزم أو عملية build. يحتاج اتصالًا بالإنترنت لتحميل الخطوط والأيقونات من Google Fonts و jsDelivr. ويمكن فتح `index.html` مباشرة، لكن تشغيله عبر الخادم المحلي هو الخيار الموصى به.
+> 💡 لتجربة الموقع على هاتفك: شغّل الخيار ③ ثم افتح `http://عنوان-جهازك:8080` من نفس شبكة الواي فاي.
 
-**النشر على GitHub Pages:** Settings ← Pages ← Deploy from branch ← `main` / root. ملف `404.html` جاهز.
+**النشر على GitHub Pages:** Settings ← Pages ← Deploy from branch ← `main` / root.
 
-## 🗂️ بنية المشروع · Structure
+---
+
+## 🗂️ مسارات الملفات
 
 ```
-index.html · 404.html
-pages/                    halls · map · about · team
-assets/
-  css/
-    tokens.css            ألوان، أحجام، منحنيات الحركة، الوضع الداكن
-    base.css              reset وطباعة وأدوات عامة
-    layout.css            الهيدر، شريط الجوال، الفوتر، التحميل، الستارة
-    components.css        أزرار، شيبس، حقول، تبويبات، حالات فارغة
-    motion.css            الظهور عند التمرير، الشريط المتحرك
-    responsive-fixes.css  قواعد التجاوب المشتركة لكل الصفحات
-    pages/                home · halls · map · about · team
-  js/
-    core/runtime.js       اللغة، الثيم، دوال مشتركة (window.Guide)
-    core/shell.js         الهيدر والفوتر والتحميل وانتقال الصفحات
-    core/motion.js        reveal، عدّادات، أزرار مغناطيسية
-    services/search-engine.js   محرك البحث (بدون DOM)
-    pages/                سكربت لكل صفحة
-  images/                 campus-map.png · faculty-logo.png
-data/
-  translations.js         كل نصوص الواجهة (ar / en)
-  buildings.js            المباني وإحداثيات الدبابيس
-  spaces.js               القاعات (مولّدة من Excel)
-  departments.js          الأقسام والوظائف والخطط الدراسية
-  team.js                 أعضاء الفريق
-  source/campus-spaces.xlsx
+📁 المشروع
+├── index.html ................ الصفحة الرئيسية
+├── 404.html .................. صفحة الخطأ
+├── pages/
+│   ├── halls.html ............ القاعات والمعامل
+│   ├── map.html .............. الخريطة
+│   ├── about.html ............ نبذة عن الكلية والأقسام
+│   └── team.html ............. فريق العمل
+├── data/ ..................... كل المحتوى هنا (عدّل منه دون لمس الكود)
+│   ├── translations.js ....... كل نصوص الواجهة بالعربية والإنجليزية
+│   ├── buildings.js .......... المباني ومواضع الدبابيس على الخريطة
+│   ├── spaces.js ............. القاعات والمعامل
+│   ├── departments.js ........ الأقسام والوظائف والخطط الدراسية
+│   ├── team.js ............... أعضاء الفريق
+│   └── source/campus-spaces.xlsx  ملف Excel الأصلي للقاعات
+└── assets/
+    ├── css/
+    │   ├── tokens.css ........ الألوان والأحجام والوضع الداكن
+    │   ├── fonts.css ......... تعريف الخطوط المحلية
+    │   ├── base.css .......... الأساسيات العامة
+    │   ├── layout.css ........ الهيدر وشريط الجوال والفوتر
+    │   ├── components.css .... الأزرار والفلاتر وحقول البحث
+    │   ├── motion.css ........ حركة الظهور والشريط المتحرك
+    │   └── pages/ ............ تنسيق خاص بكل صفحة
+    ├── js/
+    │   ├── core/ ............. اللغة والثيم (runtime) · الهيدر والفوتر (shell) · الحركة (motion)
+    │   ├── services/search-engine.js  محرك البحث
+    │   └── pages/ ............ سكربت كل صفحة
+    ├── images/ ............... campus-map.png · faculty-logo.png
+    └── vendor/ ............... الخطوط (Cairo, Readex Pro) ومكتبة الأيقونات Lucide
 ```
 
-## 🛠️ التعديل · Customising
+---
 
-| أريد أن… | عدّل |
+## 🛠️ كيف أعدّل شيئًا؟
+
+| أريد أن… | افتح الملف |
 |---|---|
-| أغيّر نصًا في الواجهة | `data/translations.js` (استخدم `*كلمة*` لتمييزها في العناوين) |
+| أغيّر نصًا في الموقع | `data/translations.js` (ضع `*كلمة*` حول الكلمة لتظهر بتمييز في العناوين) |
 | أضيف قاعة | `data/spaces.js` (`b` المبنى، `l` الدور، `t` النوع) |
-| أضيف مبنى أو أحرّك دبوسًا | `data/buildings.js` — `x, y` بالبكسل على صورة `1280×720` |
+| أضيف مبنى أو أحرّك دبوسًا | `data/buildings.js` — `x` و`y` بالبكسل على صورة الخريطة `1280×720` |
 | أضيف قسمًا | `data/departments.js` |
-| أضيف عضوًا | `data/team.js` |
-| أغيّر الألوان أو الخطوط | `assets/css/tokens.css` |
+| أضيف عضوًا في الفريق | `data/team.js` |
+| أغيّر الألوان | `assets/css/tokens.css` |
 
-## 🔗 روابط مفيدة
+**روابط جاهزة:** `pages/halls.html?q=مدرج` بحث مباشر · `pages/halls.html?b=nour` قاعات مبنى · `pages/map.html#nour` فتح مبنى على الخريطة.
 
-- `pages/halls.html?q=مدرج` بحث جاهز · `pages/halls.html?b=nour` قاعات مبنى
-- `pages/map.html#nour` فتح مبنى على الخريطة
+---
+
+## 🎨 الهوية البصرية — «Campus Atlas»
+
+ورق دافئ، وحبر، وألوان مسطحة، وظلال صلبة بدون زجاج أو blur.
+الألوان: `#f6f1e7` ورق · `#14171c` حبر · `#f2552c` مرجاني · `#ffc23c` شمس · `#7fd1a5` نعناع · `#b9a7f5` ليلكي · `#0e5f66` بحر.
+الخطوط: **Cairo** للعناوين، و**Readex Pro** للنصوص.
+
+## 📱 ملاحظة عن الخريطة على الهاتف
+
+إصبع واحد يمرّر الصفحة كالمعتاد، وإصبعان يحرّكان الخريطة ويقرّبانها. على الحاسوب اسحب بالفأرة، و`Ctrl` + عجلة الفأرة للتكبير.
 
 ---
 
@@ -108,15 +115,8 @@ data/
 
 ## English summary
 
-A static, dependency-light site (vanilla JS + [Lucide](https://lucide.dev) icons) with a fuzzy Arabic/English search engine, an interactive pan-and-zoom campus map, department chapters with study plans, light/dark themes and full RTL/LTR switching.
+A static, no-build bilingual (Arabic/English) guide for the Faculty of Business, Alexandria University: fuzzy hall search, an interactive pin map, department chapters with study plans, light/dark themes, and a fully responsive layout. Fonts and icons are bundled, so it works offline.
 
-**Run on Windows:** open CMD in the project folder, run `py -m http.server 8080`, then visit <http://localhost:8080>. No build step or package installation is required. Deploy as-is to GitHub Pages.
-
-**Design tokens** live in `assets/css/tokens.css`; **all copy** lives in `data/translations.js`.
+**Run it:** double-click `index.html`, or run `python -m http.server 8080` and open <http://localhost:8080>. Deploys as-is to GitHub Pages.
 
 </div>
-
-
-## Responsive interaction fixes
-
-The latest refinement restores the theme toggle state, stabilizes the halls type selector on mobile, uses numbered markers on the campus map, prevents the About page chapter strip from triggering vertical scroll jumps, and adds a restrained swing-in animation to team cards.

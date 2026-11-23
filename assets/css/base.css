@@ -4,6 +4,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;               /* لا يتسع عرض الصفحة أبدًا بسبب حركة أو عنصر خارج الشاشة */
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--hdr) + 16px);
 }
@@ -24,6 +25,9 @@ body {
 h1, h2, h3, h4, h5, h6, p, ul, ol, figure, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 img, svg { max-width: 100%; }
+/* النصوص الطويلة تلتف داخل الكروت ولا تُقص أبدًا */
+h1, h2, h3, h4, h5, h6, p, li, span, strong, small, a, button { overflow-wrap: anywhere; }
+button, .chip, .btn, .tag, .nav-link, .dock-link { overflow-wrap: normal; }
 a { color: inherit; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }

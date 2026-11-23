@@ -56,15 +56,17 @@
   function build() {
     pinsEl.innerHTML = visible.map((b, i) =>
       `<div class="pin${b.approx ? ' approx' : ''}${current === b.id ? ' is-on' : ''}" data-id="${b.id}" style="left:${(b.x / IMG_W) * 100}%;top:${(b.y / IMG_H) * 100}%;--i:${i}">
-         <button type="button" class="pin-dot" aria-label="${G.lang === 'ar' ? 'المبنى رقم ' : 'Building number '}${i + 1} — ${G.esc(G.L(b))}">${String(i + 1).padStart(2, '0')}</button><span class="pin-label">${G.esc(G.L(b))}</span></div>`).join('');
-    $('#index').innerHTML = visible.map((b, i) => {
+         <button type="button" class="pin-dot" aria-label="${G.esc(G.L(b))}"><span class="pin-shape" aria-hidden="true"></span><i data-lucide="${b.icon}"></i></button><span class="pin-label">${G.esc(G.L(b))}</span></div>`).join('');
+    $('#index').innerHTML = visible.map((b) => {
       const n = G.spaces.filter((s) => s.b === b.id).length;
       return `<li><button type="button" class="idx${current === b.id ? ' is-on' : ''}" data-id="${b.id}">
-        <span class="idx-no">${String(i + 1).padStart(2, '0')}</span><span class="idx-t"><b>${G.esc(G.L(b))}</b></span><i data-lucide="${b.icon}"></i></button></li>`;
+        <span class="idx-ico"><i data-lucide="${b.icon}"></i></span><span class="idx-t"><b>${G.esc(G.L(b))}</b><small>${G.t('kind.' + b.kind)}${n ? ' · ' + G.t('map.n', { n }) : ''}</small></span></button></li>`;
     }).join('');
-    $('#tip').textContent = G.t(matchMedia('(pointer: coarse)').matches ? 'map.tipTouch' : 'map.tip');
+    $('#tip').textContent = tipText();
     G.icons();
   }
+  const isTouch = () => matchMedia('(pointer: coarse)').matches;
+  const tipText = () => G.t(isTouch() ? 'map.tipTouch' : 'map.tip');
 
   /* ---------- Detail panel ---------- */
   function floorsDiagram(sp) {
@@ -79,12 +81,11 @@
   function show(id) {
     const b = G.buildings.find((x) => x.id === id); if (!b) return;
     current = id;
-    const idx = visible.findIndex((x) => x.id === id) + 1;
-    const sp = G.spaces.filter((s) => s.b === id);
+        const sp = G.spaces.filter((s) => s.b === id);
     const types = G.types.map((t) => [t, sp.filter((s) => s.t === t.id).length]).filter((x) => x[1]);
     detail.innerHTML = `
       <button type="button" class="detail-x" data-i18n-label="card.close" aria-label="${G.t('card.close')}"><i data-lucide="x"></i></button>
-      <span class="tag tone-sun"><i data-lucide="${b.icon}"></i>${String(idx).padStart(2, '0')} · ${G.t('kind.' + b.kind)}</span>
+      <span class="tag tone-sun"><i data-lucide="${b.icon}"></i>${G.t('kind.' + b.kind)}</span>
       <h3>${G.esc(G.L(b))}</h3>
       <p>${G.esc(G.L(b.d))}</p>
       ${b.approx ? `<p class="d-note"><i data-lucide="triangle-alert"></i><span>${G.t('map.approx')}</span></p>` : ''}
@@ -107,25 +108,32 @@
     history.replaceState(null, '', location.pathname + location.search);
   }
 
-  /* ---------- Pointer gestures ---------- */
+  /* ---------- Pointer gestures ----------
+     الفأرة: السحب يحرّك الخريطة.
+     اللمس: إصبع واحد يمرّر الصفحة كالمعتاد (الخريطة لا تعترض التمرير)،
+     وإصبعان يحرّكان الخريطة ويقرّبانها. */
   const ptrs = new Map();
   let drag = null, pinch = null, moved = false;
+  const rectOf = () => vp.getBoundingClientRect();
   vp.addEventListener('pointerdown', (e) => {
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
     cam.classList.remove('is-anim');
-    if (ptrs.size === 1) { drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; moved = false; }
+    if (ptrs.size === 1 && e.pointerType !== 'touch') { drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; moved = false; }
     if (ptrs.size === 2) {
-      const [a, b] = [...ptrs.values()];
-      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s: view.s }; moved = true;
+      const [a, b] = [...ptrs.values()], r = rectOf();
+      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s: view.s, mx: (a.x + b.x) / 2 - r.left, my: (a.y + b.y) / 2 - r.top };
+      drag = null; moved = true;
     }
   });
   vp.addEventListener('pointermove', (e) => {
     if (!ptrs.has(e.pointerId)) return;
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (ptrs.size === 2 && pinch) {
-      const [a, b] = [...ptrs.values()], r = vp.getBoundingClientRect();
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      zoomAt((pinch.s * (d / pinch.d)) / view.s, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+      const [a, b] = [...ptrs.values()], r = rectOf();
+      const d = Math.hypot(a.x - b.x, a.y - b.y), mx = (a.x + b.x) / 2 - r.left, my = (a.y + b.y) / 2 - r.top;
+      view.x += mx - pinch.mx; view.y += my - pinch.my;           // تحريك بحركة منتصف الإصبعين
+      pinch.mx = mx; pinch.my = my;
+      zoomAt((pinch.s * (d / pinch.d)) / view.s, mx, my);
       return;
     }
     if (drag && ptrs.size === 1) {
@@ -138,10 +146,25 @@
     ptrs.delete(e.pointerId);
     if (ptrs.size < 2) pinch = null;
     if (!ptrs.size) { drag = null; vp.classList.remove('is-drag'); setTimeout(() => { moved = false; }, 60); }
-    else if (ptrs.size === 1) { const p = [...ptrs.values()][0]; drag = { x: p.x, y: p.y, vx: view.x, vy: view.y }; }
+    else if (ptrs.size === 1 && e.pointerType !== 'touch') { const p = [...ptrs.values()][0]; drag = { x: p.x, y: p.y, vx: view.x, vy: view.y }; }
   };
   vp.addEventListener('pointerup', endPtr);
   vp.addEventListener('pointercancel', endPtr);
+
+  /* منع تمرير الصفحة أثناء حركة الإصبعين فقط، وتلميح لطيف عند محاولة تحريك الخريطة بإصبع واحد */
+  const hint = $('#hint'); let hintTimer, t0 = null;
+  function showHint() {
+    hint.textContent = G.t('map.twoFinger');
+    hint.classList.add('on'); clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hint.classList.remove('on'), 1400);
+  }
+  vp.addEventListener('touchstart', (e) => { t0 = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null; }, { passive: true });
+  vp.addEventListener('touchmove', (e) => {
+    if (e.touches.length >= 2) { if (e.cancelable) e.preventDefault(); hint.classList.remove('on'); return; }
+    if (!t0) return;
+    const dx = e.touches[0].clientX - t0.x, dy = e.touches[0].clientY - t0.y;
+    if (Math.abs(dx) > 14 && Math.abs(dx) > Math.abs(dy) * 1.2) showHint();   // حركة أفقية = يحاول تحريك الخريطة
+  }, { passive: false });
   vp.addEventListener('wheel', (e) => {
     if (!(e.ctrlKey || e.metaKey)) return;                 // plain wheel keeps scrolling the page
     e.preventDefault();
@@ -164,6 +187,7 @@
   /* ---------- Clicks ---------- */
   pinsEl.addEventListener('click', (e) => {
     const p = e.target.closest('.pin'); if (!p || moved) return;
+    e.stopPropagation();                                   // لا يصل النقر إلى الخريطة فيُغلق اللوحة (الأيقونة تُستبدل أثناء الرسم)
     current === p.dataset.id ? hide() : show(p.dataset.id);
   });
   vp.addEventListener('click', (e) => { if (!moved && !e.target.closest('.pin') && current) hide(); });
@@ -196,7 +220,7 @@
   $('#mapRetry').onclick = () => { $('#mapErr').hidden = true; load(); img.src = img.getAttribute('src').split('?')[0] + '?r=' + Date.now(); };
 
   addEventListener('resize', () => { measure(); view.s === 1 ? reset() : paint(); });
-  G.onLang(() => { build(); if (current) show(current); $('#tip').textContent = G.t(matchMedia('(pointer: coarse)').matches ? 'map.tipTouch' : 'map.tip'); });
+  G.onLang(() => { build(); if (current) show(current); $('#tip').textContent = tipText(); });
 
   try {
     measure(); reset(); build();

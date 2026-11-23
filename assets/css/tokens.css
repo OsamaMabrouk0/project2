@@ -47,7 +47,14 @@
   --wrap: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
   --hdr: 76px;
-  --dock: 72px;
+  --dock: 66px;                    /* ارتفاع شريط التنقل السفلي في الهاتف */
+  --safe-b: env(safe-area-inset-bottom, 0px);
+
+  /* شريط التنقل السفلي (يتغير مع الوضع الليلي ليبقى واضحًا دائمًا) */
+  --dock-bg:      #14171c;
+  --dock-fg:      #f6f1e7;
+  --dock-fg-dim:  rgba(246, 241, 231, .72);
+  --dock-edge:    #14171c;
 
   /* Typography */
   --font-display: "Cairo", "Segoe UI", Tahoma, system-ui, sans-serif;
@@ -80,6 +87,11 @@
   --line-soft:  rgba(244, 239, 228, .12);
   --shadow-c:   #000;
   --night:      #070a0c;
+
+  --dock-bg:      #222a32;
+  --dock-fg:      #f4efe4;
+  --dock-fg-dim:  #b7bec9;
+  --dock-edge:    #46515d;
   color-scheme: dark;
 }
 :root:not([data-theme="dark"]) { color-scheme: light; }

@@ -4,9 +4,10 @@
 
 /* ---------- Filters ---------- */
 .board { display: grid; gap: 14px; margin-top: clamp(20px, 3vw, 32px); padding: clamp(14px, 2vw, 22px); border: var(--bw) solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-2); }
-.filter-row { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 12px; }
+.filter-row { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 12px; min-width: 0; }
+.filter-row > * { min-width: 0; }
 .filter-l { font: 800 .9rem/1 var(--font-display); color: var(--ink-2); }
-.scroll-row { flex-wrap: nowrap; overflow-x: auto; padding-block: 4px 8px; margin-block: -4px -8px; scrollbar-width: thin; }
+.scroll-row { flex-wrap: nowrap; padding: 4px 18px 8px; margin: -4px -18px -8px; }
 .scroll-row .chip { flex: none; }
 
 /* ---------- Status ---------- */
@@ -18,8 +19,9 @@
 
 /* ---------- Groups ---------- */
 .group { margin-bottom: clamp(24px, 4vw, 44px); }
-.group-h { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; font-size: var(--fs-3); }
-.group-h::after { content: ""; flex: 1; border-top: 3px dotted var(--line); opacity: .35; order: 2; }
+.group-h { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 16px; font-size: var(--fs-3); }
+.group-h > span { min-width: 0; }
+.group-h::after { content: ""; flex: 1; min-width: 24px; border-top: 3px dotted var(--line); opacity: .35; order: 2; }
 .group-h em { white-space: nowrap; order: 3; font: 800 .8rem/1 var(--font-display); font-style: normal; padding: 6px 12px; border: var(--bw) solid var(--line); border-radius: var(--r-pill); background: var(--sun); color: #14171c; }
 
 /* ---------- Ticket ---------- */
@@ -40,17 +42,36 @@
 .ticket-type { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 2px 10px; border: var(--bw) solid var(--line); border-radius: var(--r-pill); background: var(--tone); color: #14171c; font-weight: 700; font-size: .76rem; }
 .ticket h3 { font-size: var(--fs-2); line-height: 1.25; }
 .ticket .where { display: flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: .9rem; }
-.ticket-go { display: inline-flex; align-items: center; gap: 6px; width: fit-content; margin-top: 4px; color: var(--ink); font-weight: 700; font-size: .88rem; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: var(--tone); transition: gap .25s var(--ease-out), text-decoration-color .2s; }
+.ticket-go { display: inline-flex; align-items: center; gap: 6px; width: fit-content; margin-top: 2px; padding-block: 9px; color: var(--ink); font-weight: 700; font-size: .88rem; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: var(--tone); transition: gap .25s var(--ease-out), text-decoration-color .2s; }
 .ticket-go:hover { gap: 12px; text-decoration-color: var(--coral); }
 .ticket-stub { display: grid; align-content: center; justify-items: center; gap: 0; padding: 12px 6px; border-inline-start: var(--bw) dashed var(--line); border-radius: 0 calc(var(--r-md) - 2px) calc(var(--r-md) - 2px) 0; background: var(--tone); color: #14171c; text-align: center; }
 [dir="rtl"] .ticket-stub { border-radius: calc(var(--r-md) - 2px) 0 0 calc(var(--r-md) - 2px); }
-.ticket-stub small { font: 700 .68rem/1.2 var(--font-display); letter-spacing: .08em; opacity: .75; }
+.ticket-stub small { font: 700 .74rem/1.2 var(--font-display); opacity: .8; }
 .ticket-stub strong { font: 900 2.9rem/1 var(--font-display); }
-.ticket-stub span { font-size: .68rem; font-weight: 600; line-height: 1.2; opacity: .85; padding-inline: 4px; }
+.ticket-stub span { font-size: .74rem; font-weight: 600; line-height: 1.2; opacity: .85; padding-inline: 4px; }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
+  .board { gap: 18px; padding: 16px 14px 18px; box-shadow: var(--sh-1); }
   .filter-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .ticket { --stub: 82px; }
-  .ticket-stub strong { font-size: 2.3rem; }
+  .filter-l { font-size: .84rem; }
+  .scroll-row { padding-inline: 14px; margin-inline: -14px; --f: 14px; }
+
+  /* فلتر النوع: خمس خانات متساوية بأيقونة فوق الاسم، تملأ العرض كاملًا */
+  .seg-fill { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); width: 100%; justify-self: stretch; border-radius: var(--r-md); }
+  .seg-fill .seg-thumb { border-radius: calc(var(--r-md) - 4px); }
+  .seg-fill button { flex-direction: column; justify-content: center; gap: 4px; min-height: 58px; padding: 6px 10px; border-radius: calc(var(--r-md) - 4px); font-size: .8rem; line-height: 1.2; }
+  .seg-fill button svg { width: 20px; height: 20px; }
+
+  .status { min-height: 0; margin-block: 18px 12px; }
   .status .reset { margin-inline-start: 0; }
+  .group-h { font-size: 1.25rem; }
+}
+@media (max-width: 560px) {
+  .ticket { --stub: 82px; }
+  .ticket-main { padding: 14px 16px; }
+  .ticket-stub strong { font-size: 2.3rem; }
+}
+@media (max-width: 360px) {
+  .ticket { --stub: 70px; }
+  .ticket-stub strong { font-size: 2rem; }
 }

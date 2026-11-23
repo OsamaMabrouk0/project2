@@ -23,21 +23,18 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
   <link rel="stylesheet" href="../assets/css/tokens.css">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/layout.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/motion.css">
   <link rel="stylesheet" href="../assets/css/pages/about.css">
-  <link rel="stylesheet" href="../assets/css/responsive-fixes.css">
 </head>
 <body data-page="about" data-base="../">
 <main id="main" class="page wrap">
     <header class="page-hero " style="--tone: var(--sun)">
-      <p class="eyebrow" data-reveal><b>04</b><span data-i18n="nav.about"></span></p>
+      <p class="eyebrow" data-reveal><b><i data-lucide="graduation-cap"></i></b><span data-i18n="nav.about"></span></p>
       <h1 data-i18n="about.title" data-split></h1>
       <p class="lead" data-i18n="about.sub" data-reveal></p>
       <ul class="facts" id="facts"></ul>
@@ -49,7 +46,7 @@
   </div>
   <p class="about-note muted" data-i18n="about.note"></p>
 </main>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../data/translations.js"></script>
   <script src="../assets/js/core/runtime.js"></script>
   <script src="../data/departments.js"></script>
