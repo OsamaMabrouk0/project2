@@ -56,11 +56,11 @@
   function build() {
     pinsEl.innerHTML = visible.map((b, i) =>
       `<div class="pin${b.approx ? ' approx' : ''}${current === b.id ? ' is-on' : ''}" data-id="${b.id}" style="left:${(b.x / IMG_W) * 100}%;top:${(b.y / IMG_H) * 100}%;--i:${i}">
-         <button type="button" class="pin-dot" aria-label="${G.esc(G.L(b))}">${i + 1}</button><span class="pin-label">${G.esc(G.L(b))}</span></div>`).join('');
+         <button type="button" class="pin-dot" aria-label="${G.lang === 'ar' ? 'المبنى رقم ' : 'Building number '}${i + 1} — ${G.esc(G.L(b))}">${String(i + 1).padStart(2, '0')}</button><span class="pin-label">${G.esc(G.L(b))}</span></div>`).join('');
     $('#index').innerHTML = visible.map((b, i) => {
       const n = G.spaces.filter((s) => s.b === b.id).length;
       return `<li><button type="button" class="idx${current === b.id ? ' is-on' : ''}" data-id="${b.id}">
-        <span class="idx-no">${i + 1}</span><span class="idx-t"><b>${G.esc(G.L(b))}</b><small>${G.t('kind.' + b.kind)}${n ? ' · ' + G.t('map.n', { n }) : ''}</small></span><i data-lucide="${b.icon}"></i></button></li>`;
+        <span class="idx-no">${String(i + 1).padStart(2, '0')}</span><span class="idx-t"><b>${G.esc(G.L(b))}</b></span><i data-lucide="${b.icon}"></i></button></li>`;
     }).join('');
     $('#tip').textContent = G.t(matchMedia('(pointer: coarse)').matches ? 'map.tipTouch' : 'map.tip');
     G.icons();

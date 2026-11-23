@@ -19,7 +19,7 @@
           <span class="strap" aria-hidden="true"></span>
           <div class="idcard-body">
             <span class="slot" aria-hidden="true"></span>
-            <div class="id-head"><span>${G.t('team.badge').toUpperCase()}</span><span>#${String(i + 1).padStart(2, '0')}</span></div>
+            <div class="id-head"><span>${G.t('team.badge').toUpperCase()}</span><span aria-hidden="true">✦</span></div>
             <span class="avatar" aria-hidden="true">${G.esc(name.slice(0, 1))}</span>
             <h3>${G.esc(name)}</h3>
             <p class="role">${m.role ? G.esc(G.L(m.role)) : G.t('team.role')}</p>

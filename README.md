@@ -37,16 +37,22 @@ An interactive bilingual guide to halls, buildings and academic departments.
 
 لا يوجد build. أي سيرفر ملفات ثابتة يكفي:
 
-```bash
-# الخيار 1: Python
-python3 -m http.server 8080
+**على Windows (الطريقة الأسهل):**
 
-# الخيار 2: Node
-npx serve .
+1. فك ضغط المشروع.
+2. افتح مجلد `project-redesign-work`.
+3. اضغط على شريط عنوان المجلد، واكتب `cmd` ثم Enter.
+4. نفّذ الأمر التالي:
+
+```cmd
+py -m http.server 8080
 ```
 
-ثم افتح `http://localhost:8080`.
-> فتح `index.html` مباشرة يعمل أيضًا، لكن السيرفر أفضل. الخطوط والأيقونات تُحمَّل من CDN (Google Fonts و jsDelivr) وتحتاج اتصالًا بالإنترنت.
+5. افتح المتصفح واكتب `http://localhost:8080`.
+6. لإيقاف الخادم ارجع إلى نافذة CMD واضغط `Ctrl + C`.
+
+إذا لم يعمل الأمر `py` وكان Python مثبتًا، جرّب `python -m http.server 8080`.
+لا يحتاج المشروع إلى npm أو تثبيت حزم أو عملية build. يحتاج اتصالًا بالإنترنت لتحميل الخطوط والأيقونات من Google Fonts و jsDelivr. ويمكن فتح `index.html` مباشرة، لكن تشغيله عبر الخادم المحلي هو الخيار الموصى به.
 
 **النشر على GitHub Pages:** Settings ← Pages ← Deploy from branch ← `main` / root. ملف `404.html` جاهز.
 
@@ -62,6 +68,7 @@ assets/
     layout.css            الهيدر، شريط الجوال، الفوتر، التحميل، الستارة
     components.css        أزرار، شيبس، حقول، تبويبات، حالات فارغة
     motion.css            الظهور عند التمرير، الشريط المتحرك
+    responsive-fixes.css  قواعد التجاوب المشتركة لكل الصفحات
     pages/                home · halls · map · about · team
   js/
     core/runtime.js       اللغة، الثيم، دوال مشتركة (window.Guide)
@@ -103,8 +110,13 @@ data/
 
 A static, dependency-light site (vanilla JS + [Lucide](https://lucide.dev) icons) with a fuzzy Arabic/English search engine, an interactive pan-and-zoom campus map, department chapters with study plans, light/dark themes and full RTL/LTR switching.
 
-**Run it:** `python3 -m http.server 8080` (or `npx serve .`) and open <http://localhost:8080>. Deploy as-is to GitHub Pages.
+**Run on Windows:** open CMD in the project folder, run `py -m http.server 8080`, then visit <http://localhost:8080>. No build step or package installation is required. Deploy as-is to GitHub Pages.
 
 **Design tokens** live in `assets/css/tokens.css`; **all copy** lives in `data/translations.js`.
 
 </div>
+
+
+## Responsive interaction fixes
+
+The latest refinement restores the theme toggle state, stabilizes the halls type selector on mobile, uses numbered markers on the campus map, prevents the About page chapter strip from triggering vertical scroll jumps, and adds a restrained swing-in animation to team cards.

@@ -74,7 +74,14 @@
       if (x.isIntersecting) links.forEach((a) => {
         const on = a.getAttribute('href') === '#' + x.target.id;
         a.classList.toggle('is-on', on);
-        if (on && matchMedia('(max-width: 960px)').matches) a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        if (on && matchMedia('(max-width: 960px)').matches) {
+          /* Move only the horizontal chapter strip; scrollIntoView also moved
+             the document vertically and caused the header/TOC jump. */
+          const strip = a.closest('.toc');
+          const sr = strip.getBoundingClientRect(), ar = a.getBoundingClientRect();
+          const delta = ar.left < sr.left ? ar.left - sr.left - 12 : ar.right > sr.right ? ar.right - sr.right + 12 : 0;
+          if (delta) strip.scrollBy({ left: delta, behavior: G.reduced ? 'auto' : 'smooth' });
+        }
       });
     }), { rootMargin: '-30% 0px -60% 0px' });
     document.querySelectorAll('.dept').forEach((d) => io.observe(d));
